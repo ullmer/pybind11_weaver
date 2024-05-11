@@ -46,7 +46,7 @@ using {entity_struct_name} = {bind_struct_name}<>;
 #else
 
 struct {entity_struct_name} : public pybind11_weaver::DisabledEntity {{
-  explicit {entity_struct_name}(EntityScope parent_h){{}}
+  explicit {entity_struct_name}(EntityScope){{}}
   static const char * Key(){{ 
     return {unique_struct_key};
   }}
