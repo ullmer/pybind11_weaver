@@ -10,11 +10,6 @@ import yaml
 import pybind11_weaver.third_party.ccsyspath as ccsyspath
 
 
-def _unique_flags(flags: List[str]) -> List[str]:
-    jonined = " ".join(flags)
-    return list(set(jonined.split(" ")).difference({""}))
-
-
 @attrs.define
 class IOConfig:
     inputs: List[str] = attrs.field(factory=list)
@@ -29,7 +24,7 @@ class IOConfig:
     def normalize(self, common_config: "CommonConfig"):
         if len(self.inputs) == 0 or self.output == "":
             raise ValueError("Inputs and output can not be empty")
-        self._cxx_flags = common_config.cxx_flags + _unique_flags(self.extra_cxx_flags)
+        self._cxx_flags = common_config.cxx_flags + self.extra_cxx_flags
         self._normalize_inputs()
 
     def _normalize_inputs(self):
@@ -83,7 +78,7 @@ class CommonConfig:
     def normalize(self):
         include_sys_flags = self._get_default_include_flags()
         include_usr_flags = ["-I" + path for path in self.include_directories]
-        self.cxx_flags = _unique_flags(self.cxx_flags) + include_sys_flags + include_usr_flags
+        self.cxx_flags = self.cxx_flags + include_sys_flags + include_usr_flags
 
     def _get_default_include_flags(self) -> List[str]:
         try_to_use = ["c++", "g++", "clang++"]

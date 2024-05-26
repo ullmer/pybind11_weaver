@@ -99,6 +99,9 @@ def _sub_type_str(type_str, subs: Dict[str, str]):
 
 
 def safe_type_reference(type: cindex.Type, subs: Dict[str, str] = None) -> str:
+    """A safe_type_reference is a name that you can reference the type in C++ code at anywhere,
+    usually it is just the fully qualified name of the type.
+    """
     ret = type.get_canonical().spelling
     if "type-parameter" in ret:
         if subs is None:
