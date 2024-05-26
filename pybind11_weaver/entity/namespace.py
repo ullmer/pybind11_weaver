@@ -22,7 +22,7 @@ class NamespaceEntity(entity_base.Entity):
 
     def init_default_pybind11_value(self, parent_scope_sym: str) -> str:
         module = f"static_cast<pybind11::module_&>({parent_scope_sym})"
-        code = f'{module}.def_submodule("{self.name}")'
+        code = f'{module}.def_submodule("{self.key_in_scope}")'
         return code
 
     def update_stmts(self, pybind11_obj_sym: str) -> List[str]:

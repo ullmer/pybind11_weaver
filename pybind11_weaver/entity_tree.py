@@ -1,6 +1,7 @@
 import logging
 from typing import List, Dict, Tuple
 from contextlib import contextmanager
+import weakref
 
 from pylibclang import cindex
 import pylibclang._C
@@ -23,9 +24,11 @@ def _inject_tu(nodes, gu):
         del node._tu
 
 
-def get_template_struct_class(cursor: cindex.Cursor):
+def _get_template_struct_class(cursor: cindex.Cursor):
     source_file = cursor.location.file
     source_line = cursor.location.line
+    # seems libclang has no API to figure out whether a template is a struct or a class, so we just read the source code
+    # to find the answer ourselves.
     # read the source_line-th line's content in the source file
     with open(source_file.name, 'r') as f:
         source_code = f.read()
@@ -36,34 +39,62 @@ def get_template_struct_class(cursor: cindex.Cursor):
         return "extern template class"
 
 
+def _add_child(parent, child: "Entity"):
+    if child.key_in_scope in parent.children:
+        # since we are traversing the AST tree in a DFS way, so when we meet a child that already exists, it is either
+        # a namespace or, or some redeclaration.
+        if child.cursor.kind == cindex.CursorKind.CXCursor_Namespace:
+            assert len(child.children) == 0  # DFS walking should guarantee this
+        else:
+            _logger.warning(
+                f"Entity at {child.cursor.location} already exists, skip, previous one is {self.children[child.key_in_scope].cursor.location}")
+    else:
+        parent.children[child.key_in_scope] = child
+    assert not hasattr(child, "_entity_tree_parent")
+    child._entity_tree_parent = weakref.ref(parent)
+
+
 class EntityTree:
     """
-    Entity Tree like an AST tree, itself is the root node.
+    Entity Tree is like the root of the AST tree, it is the entry point of the whole entity tree.
+
+    We do not mark EntityTree as a subclass of Entity, but use duck typing to treat it as an Entity, I think this makes
+    more sense to me, as EntityTree should not be an Entity.
     """
 
     def __init__(self, gu: gen_unit.GenUnit):
-        self.entities: Dict[str, entity_base.Entity] = {}
+        self.children: Dict[str, entity_base.Entity] = {}
         self.gu = gu
         self._map_from_gu(gu)
 
-    def add_child(self, child: "Entity"):
-        if child.name in self.entities:
-            if child.cursor.kind == cindex.CursorKind.CXCursor_Namespace:
-                assert len(child.children) == 0
-            else:
-                _logger.warning(
-                    f"Entity at {child.cursor.location} already exists, skip, previous one is {self.entities[child.name].cursor.location}")
-        else:
-            self.entities[child.name] = child
-        assert child.parent() is None
-
     def __getitem__(self, item):
-        return self.entities[item]
+        return self.children[item]
 
     def __contains__(self, item):
-        return item in self.entities
+        return item in self.children
 
     def _inject_explicit_template_instantiation(self, gu: gen_unit.GenUnit):
+        """
+        There is no template in python side, only template instance could be exported to python.
+
+        For pybind11-weaver, template instance is just like a normal class or normal function, the main difference is
+        that these instance has a more complex identifier name.
+
+        here is what libclang will do when encounter a template instance
+        1. libclang will treat explicit template instantiation and template specialization as a normal class or function
+        this is fine, as it is what we want.
+        2. libclang will treat implicit template instantiation (e.g, a `Foo<T>` in function parameter) as a template reference,
+        that is a problem, since we do not have an "TemplateReferenceEntity".
+
+        Of course, we can add an "TemplateReferenceEntity" to handle this, but I think this is a bad idea, because there
+        will be a lot of redundant code. A lazy solution is simple: we find all implicit template instantiation, and add
+        some fake code to explicitly instantiate these template instances, and let libclang parse again, so all problem
+        will be solved.
+
+        And the code here is just to do this: 1. find all implicit template instantiation 2. add some fake code to explicitly
+        instantiate these template instances 3. reload the translation unit to parse newly added code.
+
+        """
         explicit_instantiation = set()
         implicit_instantiation = dict()
 
@@ -100,7 +131,7 @@ class EntityTree:
                             if is_valid(template_c):
                                 key_name = common.safe_type_reference(t)
                                 if key_name not in explicit_instantiation:
-                                    implicit_instantiation[key_name] = get_template_struct_class(template_c)
+                                    implicit_instantiation[key_name] = _get_template_struct_class(template_c)
 
             return pylibclang._C.CXChildVisitResult.CXChildVisit_Recurse
 
@@ -126,8 +157,8 @@ class EntityTree:
                 new_entity = create_entity(gu, child_cursor)
                 if new_entity is None:
                     return pylibclang._C.CXChildVisitResult.CXChildVisit_Continue
-                parent.add_child(new_entity)
-                worklist.append((new_entity.cursor, parent[new_entity.name]))
+                _add_child(parent, new_entity)
+                worklist.append((new_entity.cursor, parent[new_entity.key_in_scope]))
             return pylibclang._C.CXChildVisitResult.CXChildVisit_Continue
 
         while len(worklist) > 0:

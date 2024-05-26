@@ -118,7 +118,7 @@ class Trampoline:
 
     def get_virt_def(self, virt: Virtuals, nest_level: int) -> str:
         ret = ""
-        python_name = self.entity.name
+        python_name = self.entity.key_in_scope
         concreate_ref = self.entity.reference_name()
 
         def get_nest_str(nest_level: int) -> str:
@@ -126,7 +126,7 @@ class Trampoline:
 
         if virt.base is not None and not virt.base.is_empty():
             ret = self.get_virt_def(virt.base, nest_level + 1)
-            base_ref_name = f"PyTramp{self.entity.name}{get_nest_str(nest_level + 1)}<>"
+            base_ref_name = f"PyTramp{self.entity.key_in_scope}{get_nest_str(nest_level + 1)}<>"
         else:
             base_ref_name = self.entity.reference_name()
         methods = []
@@ -147,7 +147,7 @@ class Trampoline:
         return self.get_virt_def(self._virt, 0)
 
     def get_trampoline_cls_name(self):
-        return f"PyTramp{self.entity.name}<>"
+        return f"PyTramp{self.entity.key_in_scope}<>"
 
     @staticmethod
     def detect_all_virtual_methods(cursor: cindex.Cursor, to_update: Virtuals):

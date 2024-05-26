@@ -16,7 +16,7 @@ from pybind11_weaver.utils import common
 class GenUnit:
     io_config: config.IOConfig
     tu: cindex.TranslationUnit
-    unsaved_file = Tuple[str, str]
+    unsaved_file: Tuple[str, str]
 
     def __init__(self, io_config: config.IOConfig):
         self.io_config = io_config

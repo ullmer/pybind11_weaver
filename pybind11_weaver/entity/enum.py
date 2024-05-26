@@ -20,7 +20,7 @@ class EnumEntity(entity_base.Entity):
         return self.cursor.type.spelling.replace("::", "_")
 
     def init_default_pybind11_value(self, parent_scope_sym: str) -> str:
-        code = f"{parent_scope_sym}, \"{self.name}\",pybind11::arithmetic()"
+        code = f"{parent_scope_sym}, \"{self.key_in_scope}\",pybind11::arithmetic()"
         if self.gu.io_config.gen_docstring:
             code = entity_base._inject_docstring(code, self.cursor, "append")
         return code

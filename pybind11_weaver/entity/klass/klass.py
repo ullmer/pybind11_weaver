@@ -23,7 +23,7 @@ class ClassEntity(entity_base.Entity):
         self._dependency = set()
 
     @property
-    def name(self):
+    def key_in_scope(self):
         return common.type_python_name(self.cursor.displayname)
 
     def reference_name(self) -> str:
@@ -33,7 +33,7 @@ class ClassEntity(entity_base.Entity):
         return common.type_python_name(scope_list.get_full_qualified_name(self.cursor))
 
     def init_default_pybind11_value(self, parent_scope_sym: str) -> str:
-        code = f'{parent_scope_sym},"{self.name}", pybind11::dynamic_attr()'
+        code = f'{parent_scope_sym},"{self.key_in_scope}", pybind11::dynamic_attr()'
         if self.gu.io_config.gen_docstring:
             code = entity_base._inject_docstring(code, self.cursor, "append")
         return code

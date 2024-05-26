@@ -139,7 +139,7 @@ def gen_binding_codes(entities: Dict[str, entity_base.Entity], parent_sym: str, 
             update_entity_var_stmts.append(f"{entity_obj_sym}->Update();")
 
             # recursive call to children
-            ret = gen_binding_codes(entities[entity.name].children, entity_obj_sym + "->AsScope()", next_id + 1,
+            ret = gen_binding_codes(entities[entity.key_in_scope].children, entity_obj_sym + "->AsScope()", next_id + 1,
                                     generated_entities)
             entity_struct_decls += ret[0]
             create_entity_var_stmts += ret[1]
@@ -155,7 +155,7 @@ def gen_code(config_file: str):
     for gu in gus:
         # load entities
         entity_root = entity_tree.EntityTree(gu)
-        target_entities = entity_root.entities
+        target_entities = entity_root.children
         if gu.io_config.root_module_namespace != "":
             ns_s = gu.io_config.root_module_namespace.split("::")
             for ns in ns_s:
