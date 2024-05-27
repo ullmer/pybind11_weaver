@@ -1,5 +1,5 @@
 
-// GENERATED AT 10/31/2023, 12:10:00
+// GENERATED AT 05/27/2024, 20:22:56
 
 #include "c_lib/c_lib.h"
 #include "template_pb11_weaver_helper.h"
@@ -293,7 +293,7 @@ using Entity_Foo_Q_R6int9_8 = Bind_Foo_Q_R6int9_8<>;
 #else
 
 struct Entity_Foo_Q_R6int9_8 : public pybind11_weaver::DisabledEntity {
-  explicit Entity_Foo_Q_R6int9_8(EntityScope parent_h) {}
+  explicit Entity_Foo_Q_R6int9_8(EntityScope) {}
   static const char *Key() { return "Foo_Q_R6int9_8"; }
 };
 
@@ -340,7 +340,7 @@ using Entity_Foo_float_9 = Bind_Foo_float_9<>;
 #else
 
 struct Entity_Foo_float_9 : public pybind11_weaver::DisabledEntity {
-  explicit Entity_Foo_float_9(EntityScope parent_h) {}
+  explicit Entity_Foo_float_9(EntityScope) {}
   static const char *Key() { return "Foo_float_9"; }
 };
 
@@ -384,7 +384,7 @@ using Entity_GetNotBoundType = Bind_GetNotBoundType<>;
 #else
 
 struct Entity_GetNotBoundType : public pybind11_weaver::DisabledEntity {
-  explicit Entity_GetNotBoundType(EntityScope parent_h) {}
+  explicit Entity_GetNotBoundType(EntityScope) {}
   static const char *Key() { return "GetNotBoundType"; }
 };
 
@@ -416,7 +416,7 @@ using Entity_Q = Bind_Q<>;
 #else
 
 struct Entity_Q : public pybind11_weaver::DisabledEntity {
-  explicit Entity_Q(EntityScope parent_h) {}
+  explicit Entity_Q(EntityScope) {}
   static const char *Key() { return "Q"; }
 };
 
@@ -451,7 +451,7 @@ using Entity_Q_R6int9 = Bind_Q_R6int9<>;
 #else
 
 struct Entity_Q_R6int9 : public pybind11_weaver::DisabledEntity {
-  explicit Entity_Q_R6int9(EntityScope parent_h) {}
+  explicit Entity_Q_R6int9(EntityScope) {}
   static const char *Key() { return "Q_R6int9"; }
 };
 
@@ -504,7 +504,7 @@ using Entity_template_ns_TemplateClass6double9 =
 
 struct Entity_template_ns_TemplateClass6double9
     : public pybind11_weaver::DisabledEntity {
-  explicit Entity_template_ns_TemplateClass6double9(EntityScope parent_h) {}
+  explicit Entity_template_ns_TemplateClass6double9(EntityScope) {}
   static const char *Key() { return "template_ns_TemplateClass6double9"; }
 };
 
@@ -551,7 +551,7 @@ using Entity_TopFunction = Bind_TopFunction<>;
 #else
 
 struct Entity_TopFunction : public pybind11_weaver::DisabledEntity {
-  explicit Entity_TopFunction(EntityScope parent_h) {}
+  explicit Entity_TopFunction(EntityScope) {}
   static const char *Key() { return "TopFunction"; }
 };
 
@@ -594,7 +594,7 @@ using Entity_TopFunction1 = Bind_TopFunction1<>;
 #else
 
 struct Entity_TopFunction1 : public pybind11_weaver::DisabledEntity {
-  explicit Entity_TopFunction1(EntityScope parent_h) {}
+  explicit Entity_TopFunction1(EntityScope) {}
   static const char *Key() { return "TopFunction1"; }
 };
 
@@ -637,7 +637,7 @@ using Entity_TopFunctionDef = Bind_TopFunctionDef<>;
 #else
 
 struct Entity_TopFunctionDef : public pybind11_weaver::DisabledEntity {
-  explicit Entity_TopFunctionDef(EntityScope parent_h) {}
+  explicit Entity_TopFunctionDef(EntityScope) {}
   static const char *Key() { return "TopFunctionDef"; }
 };
 
@@ -763,7 +763,7 @@ using Entity_VirtualBase6int9 = Bind_VirtualBase6int9<>;
 #else
 
 struct Entity_VirtualBase6int9 : public pybind11_weaver::DisabledEntity {
-  explicit Entity_VirtualBase6int9(EntityScope parent_h) {}
+  explicit Entity_VirtualBase6int9(EntityScope) {}
   static const char *Key() { return "VirtualBase6int9"; }
 };
 
@@ -796,7 +796,7 @@ using Entity_disabled_member = Bind_disabled_member<>;
 #else
 
 struct Entity_disabled_member : public pybind11_weaver::DisabledEntity {
-  explicit Entity_disabled_member(EntityScope parent_h) {}
+  explicit Entity_disabled_member(EntityScope) {}
   static const char *Key() { return "disabled_member"; }
 };
 
@@ -833,7 +833,7 @@ using Entity_disabled_member_disabled_Foo = Bind_disabled_member_disabled_Foo<>;
 
 struct Entity_disabled_member_disabled_Foo
     : public pybind11_weaver::DisabledEntity {
-  explicit Entity_disabled_member_disabled_Foo(EntityScope parent_h) {}
+  explicit Entity_disabled_member_disabled_Foo(EntityScope) {}
   static const char *Key() { return "disabled_member_disabled_Foo"; }
 };
 
@@ -866,7 +866,7 @@ using Entity_disabled_space = Bind_disabled_space<>;
 #else
 
 struct Entity_disabled_space : public pybind11_weaver::DisabledEntity {
-  explicit Entity_disabled_space(EntityScope parent_h) {}
+  explicit Entity_disabled_space(EntityScope) {}
   static const char *Key() { return "disabled_space"; }
 };
 
@@ -901,7 +901,7 @@ using Entity_disabled_space_Foo = Bind_disabled_space_Foo<>;
 #else
 
 struct Entity_disabled_space_Foo : public pybind11_weaver::DisabledEntity {
-  explicit Entity_disabled_space_Foo(EntityScope parent_h) {}
+  explicit Entity_disabled_space_Foo(EntityScope) {}
   static const char *Key() { return "disabled_space_Foo"; }
 };
 
@@ -934,7 +934,7 @@ using Entity_earth = Bind_earth<>;
 #else
 
 struct Entity_earth : public pybind11_weaver::DisabledEntity {
-  explicit Entity_earth(EntityScope parent_h) {}
+  explicit Entity_earth(EntityScope) {}
   static const char *Key() { return "earth"; }
 };
 
@@ -967,7 +967,7 @@ using Entity_earth_creatures = Bind_earth_creatures<>;
 #else
 
 struct Entity_earth_creatures : public pybind11_weaver::DisabledEntity {
-  explicit Entity_earth_creatures(EntityScope parent_h) {}
+  explicit Entity_earth_creatures(EntityScope) {}
   static const char *Key() { return "earth_creatures"; }
 };
 
@@ -1006,7 +1006,7 @@ using Entity_earth_creatures_Animal = Bind_earth_creatures_Animal<>;
 #else
 
 struct Entity_earth_creatures_Animal : public pybind11_weaver::DisabledEntity {
-  explicit Entity_earth_creatures_Animal(EntityScope parent_h) {}
+  explicit Entity_earth_creatures_Animal(EntityScope) {}
   static const char *Key() { return "earth_creatures_Animal"; }
 };
 
@@ -1057,7 +1057,7 @@ using Entity_earth_creatures_Home = Bind_earth_creatures_Home<>;
 #else
 
 struct Entity_earth_creatures_Home : public pybind11_weaver::DisabledEntity {
-  explicit Entity_earth_creatures_Home(EntityScope parent_h) {}
+  explicit Entity_earth_creatures_Home(EntityScope) {}
   static const char *Key() { return "earth_creatures_Home"; }
 };
 
@@ -1094,7 +1094,7 @@ using Entity_earth_creatures_Home_Food = Bind_earth_creatures_Home_Food<>;
 
 struct Entity_earth_creatures_Home_Food
     : public pybind11_weaver::DisabledEntity {
-  explicit Entity_earth_creatures_Home_Food(EntityScope parent_h) {}
+  explicit Entity_earth_creatures_Home_Food(EntityScope) {}
   static const char *Key() { return "earth_creatures_Home_Food"; }
 };
 
@@ -1138,7 +1138,7 @@ using Entity_NSFunction = Bind_NSFunction<>;
 #else
 
 struct Entity_NSFunction : public pybind11_weaver::DisabledEntity {
-  explicit Entity_NSFunction(EntityScope parent_h) {}
+  explicit Entity_NSFunction(EntityScope) {}
   static const char *Key() { return "NSFunction"; }
 };
 
@@ -1181,7 +1181,7 @@ using Entity_NSFunctionDef = Bind_NSFunctionDef<>;
 #else
 
 struct Entity_NSFunctionDef : public pybind11_weaver::DisabledEntity {
-  explicit Entity_NSFunctionDef(EntityScope parent_h) {}
+  explicit Entity_NSFunctionDef(EntityScope) {}
   static const char *Key() { return "NSFunctionDef"; }
 };
 
@@ -1427,7 +1427,7 @@ using Entity_earth_creatures_SweetHome = Bind_earth_creatures_SweetHome<>;
 
 struct Entity_earth_creatures_SweetHome
     : public pybind11_weaver::DisabledEntity {
-  explicit Entity_earth_creatures_SweetHome(EntityScope parent_h) {}
+  explicit Entity_earth_creatures_SweetHome(EntityScope) {}
   static const char *Key() { return "earth_creatures_SweetHome"; }
 };
 
@@ -1465,7 +1465,7 @@ using Entity_earth_creatures_ValueSet = Bind_earth_creatures_ValueSet<>;
 
 struct Entity_earth_creatures_ValueSet
     : public pybind11_weaver::DisabledEntity {
-  explicit Entity_earth_creatures_ValueSet(EntityScope parent_h) {}
+  explicit Entity_earth_creatures_ValueSet(EntityScope) {}
   static const char *Key() { return "earth_creatures_ValueSet"; }
 };
 
@@ -1498,7 +1498,7 @@ using Entity_template_ns = Bind_template_ns<>;
 #else
 
 struct Entity_template_ns : public pybind11_weaver::DisabledEntity {
-  explicit Entity_template_ns(EntityScope parent_h) {}
+  explicit Entity_template_ns(EntityScope) {}
   static const char *Key() { return "template_ns"; }
 };
 
@@ -1550,7 +1550,7 @@ using Entity_template_ns_DerivedClass = Bind_template_ns_DerivedClass<>;
 
 struct Entity_template_ns_DerivedClass
     : public pybind11_weaver::DisabledEntity {
-  explicit Entity_template_ns_DerivedClass(EntityScope parent_h) {}
+  explicit Entity_template_ns_DerivedClass(EntityScope) {}
   static const char *Key() { return "template_ns_DerivedClass"; }
 };
 
@@ -1605,7 +1605,7 @@ using Entity_template_ns_TemplateClass6float9 =
 
 struct Entity_template_ns_TemplateClass6float9
     : public pybind11_weaver::DisabledEntity {
-  explicit Entity_template_ns_TemplateClass6float9(EntityScope parent_h) {}
+  explicit Entity_template_ns_TemplateClass6float9(EntityScope) {}
   static const char *Key() { return "template_ns_TemplateClass6float9"; }
 };
 
@@ -1658,7 +1658,7 @@ using Entity_template_ns_TemplateClass6int9 =
 
 struct Entity_template_ns_TemplateClass6int9
     : public pybind11_weaver::DisabledEntity {
-  explicit Entity_template_ns_TemplateClass6int9(EntityScope parent_h) {}
+  explicit Entity_template_ns_TemplateClass6int9(EntityScope) {}
   static const char *Key() { return "template_ns_TemplateClass6int9"; }
 };
 
@@ -1768,7 +1768,7 @@ using Entity_DriveVirtual = Bind_DriveVirtual<>;
 #else
 
 struct Entity_DriveVirtual : public pybind11_weaver::DisabledEntity {
-  explicit Entity_DriveVirtual(EntityScope parent_h) {}
+  explicit Entity_DriveVirtual(EntityScope) {}
   static const char *Key() { return "DriveVirtual"; }
 };
 

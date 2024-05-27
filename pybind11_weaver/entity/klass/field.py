@@ -14,8 +14,8 @@ _logger = logging.getLogger(__name__)
 def _is_bindable(cursor: cindex.Cursor):
     c_type = common.remove_const_ref_pointer(cursor.type)
     canonical = c_type.get_canonical()
-    if int(canonical.kind) <= int(cindex.TypeKind.CXType_LastBuiltin) and int(canonical.kind) >= int(
-            cindex.TypeKind.CXType_FirstBuiltin):
+    if int(cindex.TypeKind.CXType_LastBuiltin) >= int(canonical.kind) >= int(cindex.TypeKind.CXType_FirstBuiltin) \
+            and not cursor.is_bitfield():
         return True
     if canonical.kind == cindex.TypeKind.CXType_Enum:
         return True
