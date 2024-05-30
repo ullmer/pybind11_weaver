@@ -178,7 +178,7 @@ class EntityTree:
             if not gu.is_cursor_in_inputs(child_cursor):
                 return pylibclang._C.CXChildVisitResult.CXChildVisit_Continue
 
-            if child_cursor.kind == cindex.CursorKind.CXCursor_UnexposedDecl:
+            if child_cursor.kind == cindex.CursorKind.CXCursor_LinkageSpec:
                 # extern C
                 worklist.append((child_cursor, parent))
                 return pylibclang._C.CXChildVisitResult.CXChildVisit_Continue
