@@ -142,10 +142,12 @@ def gen_binding_codes(entities: Dict[str, entity_base.Entity], parent_sym: str, 
             update_entity_var_stmts.append(f"{entity_obj_sym}->Update();")
 
             # Avoid infinite recursion on already-processed entities
-            if id(entity) in visited_entities:
-                print(f"Skipping already visited entity: {entity.reference_name()}")
+            ref_name = entity.reference_name()
+            if ref_name in visited_entities:
+                print(f"Skipping already visited entity: {ref_name}")
                 continue
-            visited_entities.add(id(entity))
+
+            visited_entities.add(ref_name)
 
             # recursive call to children
             ret = gen_binding_codes(entities[entity.key_in_scope].children, entity_obj_sym + "->AsScope()", next_id + 1,
@@ -157,7 +159,6 @@ def gen_binding_codes(entities: Dict[str, entity_base.Entity], parent_sym: str, 
             next_id = ret[4]
 
     return entity_struct_decls, create_entity_var_stmts, update_entity_var_stmts, exported_type, next_id
-
 
 def gen_code(config_file: str):
     gus = gen_unit.load_all_gu(config_file)
