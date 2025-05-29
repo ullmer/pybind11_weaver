@@ -90,9 +90,8 @@ pybind11_weaver::_PointerWrapperBase::FastBind(m);
 
 """
 
-
 def gen_binding_codes(entities: Dict[str, entity_base.Entity], parent_sym: str, beg_id: int,
-                      generated_entities: Dict[str, entity_base.Entity]):
+                      generated_entities: Dict[str, entity_base.Entity], visited_entities=None):
     next_id = beg_id
     entity_struct_decls: List[str] = []
     create_entity_var_stmts: List[str] = []
@@ -142,9 +141,15 @@ def gen_binding_codes(entities: Dict[str, entity_base.Entity], parent_sym: str, 
             # generate updates
             update_entity_var_stmts.append(f"{entity_obj_sym}->Update();")
 
+            # Avoid infinite recursion on already-processed entities
+            if id(entity) in visited_entities:
+                print(f"Skipping already visited entity: {entity.reference_name()}")
+                continue
+            visited_entities.add(id(entity))
+
             # recursive call to children
             ret = gen_binding_codes(entities[entity.key_in_scope].children, entity_obj_sym + "->AsScope()", next_id + 1,
-                                    generated_entities)
+                                    generated_entities, visited_entities)
             entity_struct_decls += ret[0]
             create_entity_var_stmts += ret[1]
             update_entity_var_stmts += ret[2]
@@ -165,9 +170,10 @@ def gen_code(config_file: str):
             for ns in ns_s:
                 target_entities = target_entities[ns].children
         generated_entities = dict()
+        visited_entities   = set()
         entity_struct_decls, create_entity_var_stmts, update_entity_var_stmts, exported_type, _ = gen_binding_codes(
             entities=target_entities,
-            parent_sym="EntityScope(m)", beg_id=0, generated_entities=generated_entities)
+            parent_sym="EntityScope(m)", beg_id=0, generated_entities=generated_entities, visited_entities=visited_entities)
 
         warn_unexported_types(exported_type)
 
