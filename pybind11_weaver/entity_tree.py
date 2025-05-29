@@ -46,8 +46,10 @@ def _add_child(parent, child: "Entity") -> "Entity":
         # since we are traversing the AST tree in a BFS way, so when we meet a child that already exists, it is either
         # a namespace or some redeclaration.
         if child.cursor.kind == cindex.CursorKind.CXCursor_Namespace:
-            assert len(parent.children[child.key_in_scope].children) == 0  # BFS walking should guarantee this
-            return parent.children[child.key_in_scope]
+            try:
+              assert len(parent.children[child.key_in_scope].children) == 0  # BFS walking should guarantee this
+              return parent.children[child.key_in_scope]
+            except: _logger.warning(f"Previously uncaught error in _add_child; ignoring"); return None
         else:
             _logger.warning(
                 f"Entity at {child.cursor.location} already exists, skip, previous one is {parent.children[child.key_in_scope].cursor.location}")
