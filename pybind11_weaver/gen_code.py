@@ -104,7 +104,9 @@ def gen_binding_codes(entities: Dict[str, entity_base.Entity], parent_sym: str, 
         for key in sorted_keys:
             entity = entities[key]
             bypass = False
+            if entity is None: print(f"Skipping null entity at {entity_obj_sym}"); continue
             for d in entity.dependency():
+                if entity is None: print(f"Skipping null entity.dependency at {entity_obj_sym}"); continue
                 if d not in generated_entities:
                     bypass = True
             if bypass:
